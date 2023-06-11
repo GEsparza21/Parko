@@ -6,6 +6,7 @@ var input5 = document.getElementById("Apartamento");
 var input6 = document.getElementById("Cajon");
 var input7 = document.getElementById("Telefono");
 var btnEdit = document.getElementById("btnedit");
+var btnDesactivar = document.getElementById("btnsave");
 
 // Deshabilitar el campo de entrada de texto
 input.disabled = true;
@@ -27,5 +28,14 @@ function habilitar(){
     input7.disabled = false;
 }
 
+function desactivar(){
+    input.disabled = true;
+    input2.disabled = true;
+    input3.disabled = true;
+    input4.disabled = true;
+    input5.disabled = true;
+    input6.disabled = true;
+    input7.disabled = true;
+}
 // Habilitar el campo de entrada de texto
 //input.disabled = false;

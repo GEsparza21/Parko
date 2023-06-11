@@ -1,0 +1,65 @@
+.container {
+    max-width: 400px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 20px;
+  }
+  
+  .header {
+    background-color: #000;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .content {
+    margin-top: 10px;
+  }
+  
+  input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+  
+  button {
+    margin-top: 10px;
+    background-color: #000;
+    color: #fff;
+    padding: 10px;15px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .footer {
+    text-align: center;
+  }
+  
+  @media screen and (max-width: 400px) {
+    .container {
+      width: 100%;
+    }
+  
+    .header {
+      padding: 5px;
+    }
+  
+    .content {
+      margin-top: 0;
+    }
+  
+    input {
+      width: 100%;
+      padding: 5px;
+    }
+  
+    button {
+      width: 100%;
+    }
+  
+    .full-width {
+      width: 100%;
+    }
+  }
+  

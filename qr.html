@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="Estilo.css">
+    <link rel="stylesheet" href="estiloqr.css">
+    <title>Inicio Sesión</title>
+</head>
+<body>
+    <div class="container" style="min-height: calc(100vh - 70px); overflow-y: auto;">
+
+        <br>
+        <br>
+        <br>
+        <div class="row" class="row justify-content-center align-items-center">
+            <br>
+            <br>
+            <br>
+
+            <h1>Generar QR para visitantes</h1>
+
+            <div id="form-container" class="text-center">
+                <label for="exampleFormControlSelect1">Selecciona el tipo de visitante</label>
+                <select class="form-control" id="exampleFormControlSelect1">
+                  <option id="1">Familia</option>
+                  <option id="2">Repartidor</option>
+                  <option id="3">Repartidor de Comida</option>
+                  <option id="4">Amigo/Familia</option>
+                  <option id="5">Salida Rápida</option>
+                </select>
+                <label for="expiry-time">Tiempo de expiración:</label>
+                <input type="datetime-local" id="expiry-time" required>
+  
+              <label for="text-input">Nota: </label>
+              <input type="text" id="text-input" placeholder="Enter text">
+          
+             
+          
+              <button id="generate-btn" class="btn btn-success">Generar QR</button>
+            </div>
+          
+            <div id="qrcode-container"></div>
+          
+
+            </div>
+        </div>
+
+    <nav class="navbar fixed-bottom navbar-light bg-light style="background-color: #e3f2fd;">
+      
+            <a class="navbar-brand " href="inicio.html" onclick="changeTab(event, 'usuario')"">
+              <i class="fa-solid fa-house fa-2xl"></i>
+            Inicio
+            </a>
+
+            <a class="navbar-brand " href="usuario.html">
+                <i class="fa-solid fa-user fa-2xl"></i>
+                Usuario             
+              </a>
+
+              <a class="navbar-brand active" href="codigo.html" onclick="changeTab(event, 'qr')">
+                <i class="fa-solid fa-qrcode fa-2xl"></i>
+                QR
+              </a>
+
+      </nav>
+      </style>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+      <script src="https://kit.fontawesome.com/19a155dae3.js" crossorigin="anonymous"></script>
+        <script src="qr.js"></script>
+
+      
+</body>
+
+</html>
