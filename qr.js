@@ -12,6 +12,15 @@ document.getElementById('generate-btn').addEventListener('click', function() {
         return;
       }
   
+      var timeDifference = selectedTime - currentTime;
+      var minutesDifference = Math.floor(timeDifference / (1000 * 60));
+      var hoursDifference = Math.floor(minutesDifference / 60);
+  
+      if (minutesDifference < 30) {
+        alert('La fecha de expiración debe ser al menos 30 minutos en el futuro.');
+        return;
+      }
+  
       var message = generateMessage(option, text, expiryTime);
       var qrCode = generateQRCode(message, expiryTime);
       document.getElementById('qrcode-container').innerHTML = '';
