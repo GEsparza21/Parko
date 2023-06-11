@@ -1,0 +1,56 @@
+
+body {
+    background-color: #000000;
+    color: #ffffff;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    
+    padding-bottom: 70px;
+}
+
+
+.navbar-brand.active {
+    /* Estilos para la opción activa */
+    background-color: #8A8CEE;
+    color: #fff;
+    /* Otros estilos de resaltado */
+  }
+  
+.navbar.fixed-bottom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+}
+
+/*add color to a button*/
+.btnedit {
+    background-color: #1976d2;
+    color: #fff;
+    /*make the botton looks rounder*/
+    border-radius: 0.5rem;
+    /*add a little shadow*/
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    /*add a little animation*/
+    transition: all 0.2s;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    
+
+}
+/*add hover to a button*/
+.btnedit:hover {
+    background-color: #337ab7;
+    color: #fff;
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+.grid-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    background-color: lightgray;
+}
