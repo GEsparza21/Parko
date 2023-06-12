@@ -14,25 +14,28 @@
             <div class="col-12">
                 <img src="img/logo.png" class="img-fluid" alt="Responsive image">
                 <div class="text-center">
-                    <form>
+                    <br>
+                    <h2>Inicio de Sesión</h2>
+                    <br>
+
+                    <form action="login.php" method="post">
                         <div class="form-group">
                           <label for="exampleInputEmail1">Email/Correo</label>
-                          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="ejemplo@correo.com">
+                          <input type="text"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="ejemplo@correo.com" name="email" required>
                           <br>
                         </div>
                         <div class="form-group">
                           <label for="exampleInputPassword1">Contraseña</label>
-                          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Contraseña">
+                          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Contraseña" name="password" required>
                         </div>
-                        <br>
                         <br>
                         <button type="submit" class="btn btn-primary">Entrar</button>
                         <br>
                         <br>
-                        <small id="emailHelp" class="form-text text-muted">¿No tienes una cuenta? Regiístrate</small>
+                        <small id="emailHelp" class="form-text text-muted">¿No tienes una cuenta? Regístrate</small>
                         <br>
                         <br>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">Registrarse</button>
                       </form>
 
             </div>

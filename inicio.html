@@ -15,7 +15,7 @@
                 <img src="img/logo.png" class="img-fluid" alt="Responsive image">
                 <div class="text-center">
                     <h1>Bienvenido</h1>
-                    <h2>Nombre del usuario</h2>
+                    <h2 id="user-name">Nombre del usuario</h2>
                     <h3>Selecciona una opción</h3>
 
             </div>
@@ -40,6 +40,17 @@
 
       </nav>
       </style>
+      <script>
+        // Retrieve the username from the URL query parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const userName = urlParams.get('nombre');
+
+        // Update the user name element with the retrieved username
+        const userNameElement = document.getElementById('user-name');
+        if (userNameElement) {
+            userNameElement.textContent = userName;
+        }
+    </script>
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
       <script src="https://kit.fontawesome.com/19a155dae3.js" crossorigin="anonymous"></script>
 
