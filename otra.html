@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descargar QR</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+</head>
+
+<body>
+    <div id="qrcode-container"></div>
+
+    <script>
+        window.onload = function () {
+            var cadena = localStorage.getItem("qrCodeData");
+            var qr = new QRious({
+                element: document.getElementById("qrcode-container"),
+                value: cadena,
+                size: 300
+            });
+
+            // Crea un enlace de descarga
+            var link = document.createElement("a");
+            link.href = qr.toDataURL("image/png");
+            link.download = "codigo_qr.png";
+
+            // Simula el clic en el enlace para iniciar la descarga
+            link.click();
+            AndroidInterface.downloadImage(qr.toDataURL("image/png"));
+            
+        };
+    </script>
+
+</body>
+
+</html>

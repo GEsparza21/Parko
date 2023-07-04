@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="Estilo.css">
+    <link rel="stylesheet" href="estiloqr.css">
+    <title>Generar QR para visitantes</title>
+</head>
+
+<body>
+    <div class="container" style="min-height: calc(100vh - 70px); overflow-y: auto;">
+        <br>
+        <br>
+        <br>
+        <div class="row justify-content-center align-items-center">
+            <br>
+            <br>
+            <br>
+            <h1>Generar QR para visitantes</h1>
+            <div id="form-container" class="text-center">
+                <label for="tipo-visita-select">Tipo de visita</label>
+                <select class="form-control" id="tipo-visita-select">
+                    <option value="1">Familia</option>
+                    <option value="2">Repartidor</option>
+                    <option value="3">Repartidor de Comida</option>
+                    <option value="4">Amigo/Familia</option>
+                    <option value="5">Servicios</option>
+                </select>
+                <label for="nombre-input">Nombre Completo</label>
+                <input type="text" id="nombre-input" placeholder="Ingresa el nombre del visitante">
+                <label for="placas-input">Placas</label>
+                <input type="text" id="placas-input" placeholder="Ingrese la placa de su coche"
+                    pattern="[A-Z]{3}[0-9]{4}" title="Las placas deben tener el formato ABC123" maxlength="7" required>
+                <label for="tipo-vehiculo-select">Tipo de vehiculo</label>
+                <select class="form-control" id="tipo-vehiculo-select">
+                    <option value="1">Moto/Motoneta</option>
+                    <option value="2">Carro</option>
+                    <option value="3">Camioneta</option>
+                </select>
+                <label for="expiry-time">Tiempo de expiración:</label>
+                <input type="datetime-local" id="expiry-time" required>
+                <button id="generate-btn" class="btn btn-success">Generar QR</button>
+                <!-- <button id="download-btn" class="btn btn-primary">Descargar QR</button> -->
+                <button id="delete-btn" class="btn btn-danger">Eliminar QR</button>
+
+            </div>
+
+            <div id="qrcode-container"></div>
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+            <script>
+                document.getElementById("generate-btn").addEventListener("click", function () {
+                    var nombre = document.getElementById("nombre-input").value;
+                    var placas = document.getElementById("placas-input").value;
+                    var tipoVehiculo = document.getElementById("tipo-vehiculo-select").options[document.getElementById("tipo-vehiculo-select").selectedIndex].text;
+                    var tipoVisita = document.getElementById("tipo-visita-select").options[document.getElementById("tipo-visita-select").selectedIndex].text;
+                    var tiempoExpiracion = document.getElementById("expiry-time").value;
+
+                    if (!nombre || !placas || !tipoVehiculo || !tipoVisita || !tiempoExpiracion) {
+                        alert("Por favor, complete todos los campos y seleccione una fecha de expiración.");
+                        return;
+                    }
+
+                    var currentTime = new Date();
+                    var selectedTime = new Date(tiempoExpiracion);
+
+                    if (selectedTime <= currentTime) {
+                        alert("La fecha de expiración debe ser posterior a la fecha actual.");
+                        return;
+                    }
+
+                    var timeDifference = selectedTime - currentTime;
+                    var minutesDifference = Math.floor(timeDifference / (1000 * 60));
+                    // var hoursDifference = Math.floor(minutesDifference / 60);
+                    var hoursDifference = Math.floor(timeDifference / (1000 * 60 * 60));
+
+                    if (minutesDifference < 30) {
+                        alert("La fecha de expiración debe ser al menos 30 minutos en el futuro.");
+                        return;
+                    }
+
+
+                    if (hoursDifference > 23) {
+                        alert('La fecha de expiración no puede exceder las 24 horas en el futuro.');
+                        return;
+                    }
+
+                    //var cadena = nombre.slice(0, 3) + placas.slice(0, 3) + tipoVehiculo.slice(0, 3) + tipoVisita.slice(0, 3) + tiempoExpiracion.slice(0, 10);
+                    var cadena = nombre.slice(0, 3) + placas.slice(0, 3) + tipoVehiculo.slice(0, 3) + tipoVisita.slice(0, 3) + tiempoExpiracion.slice(2, 4) + tiempoExpiracion.slice(8, 10) + tiempoExpiracion.slice(11, 13);
+                    var xhr = new XMLHttpRequest();
+                    xhr.onload = function () {
+                        if (xhr.status === 200) {
+                            // Solicitud completada exitosamente
+                            consoleLog = "Qr insertado en la base de datos";
+                            // Generar QR
+                            generateQR(cadena);
+                        } else {
+                            // Ocurrió un error al realizar la solicitud
+                            alert("Error al insertar el número aleatorio en la base de datos");
+                        }
+                    };
+
+                    document.getElementById("delete-btn").addEventListener("click", function () {
+                        // Realiza una solicitud POST al archivo PHP para eliminar el QR de la base de datos
+                        var xhr = new XMLHttpRequest();
+                        xhr.onload = function () {
+                            if (xhr.status === 200) {
+                                // Solicitud completada exitosamente
+                                console.log("QR eliminado de la base de datos");
+                            } else {
+                                // Ocurrió un error al realizar la solicitud
+                                console.log("Error al eliminar el QR de la base de datos");
+                            }
+                        };
+
+                        var data = new FormData();
+                        // Pasa la cadena asociada al QR para identificar el registro a eliminar en la base de datos
+                        data.append("cadena", cadena);
+
+                        xhr.open("POST", "eliminarqr.php");
+                        xhr.send(data);
+
+                        // Elimina el contenido del contenedor del código QR
+                        document.getElementById("qrcode-container").innerHTML = "";
+                    });
+
+
+                    var data = new FormData();
+
+                    data.append("cadena", cadena);
+                    data.append("tiempoExpiracion", tiempoExpiracion);
+                    data.append("nombre", nombre);
+                    data.append("placas", placas);
+                    data.append("tipoVehiculo", tipoVehiculo);
+                    data.append("tipoVisita", tipoVisita);
+
+                    // Realiza una solicitud POST al archivo PHP
+                    xhr.open("POST", "insertarvisita.php");
+                    xhr.send(data);
+
+                    // Elimina el contenido anterior del contenedor del código QR
+                    document.getElementById("qrcode-container").innerHTML = "";
+
+
+
+                });
+
+                function generateQR(cadena) {
+                    var qr = new QRious({
+                        element: document.getElementById("qrcode-container"),
+                        value: cadena,
+                        size: 300
+                    });
+
+                    // Crea un elemento canvas y lo agrega al contenedor del código QR
+                    var canvas = qr.canvas;
+                    document.getElementById("qrcode-container").appendChild(canvas);
+                }
+
+                // document.getElementById("download-btn").addEventListener("click", function () {
+                //     // Verificar si el contenedor del código QR tiene contenido
+                //     var qrContainer = document.getElementById("qrcode-container");
+                //     if (qrContainer.innerHTML === "") {
+                //         alert("Primero debe generar un código QR.");
+                //         return;
+                //     }
+
+                //     // Obtén la URL de la imagen del código QR
+                //     var qrImageUrl = qrContainer.querySelector("canvas").toDataURL("image/png");
+
+                //     // Crea un enlace de descarga
+                //     var link = document.createElement("a");
+                //     link.href = qrImageUrl;
+                //     link.download = "codigo_qr.png";
+
+
+                //     // Simula el clic en el enlace para iniciar la descarga
+                //     link.click();
+                // });
+
+            </script>
+
+            <nav class="navbar fixed-bottom navbar-light bg-light" style="background-color: #e3f2fd;">
+                <a class="navbar-brand" href="inicio.php" onclick="changeTab(event, 'usuario')">
+                    <i class="fa-solid fa-house fa-2xl"></i>
+                    Inicio
+                </a>
+                <a class="navbar-brand" href="usuario.php">
+                    <i class="fa-solid fa-user fa-2xl"></i>
+                    Usuario
+                </a>
+                <a class="navbar-brand active" href="pruebamamalona.html" onclick="changeTab(event, 'qr')">
+                    <i class="fa-solid fa-qrcode fa-2xl"></i>
+                    QR
+                </a>
+            </nav>
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+                crossorigin="anonymous"></script>
+            <script src="https://kit.fontawesome.com/19a155dae3.js" crossorigin="anonymous"></script>
+
+        </div>
+    </div>
+</body>
+
+</html>

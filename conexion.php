@@ -1,15 +1,13 @@
 <?php
+$hostname = 'srv473.hstgr.io';
+$database = 'u263256283_parkoapp';
+$username = 'u263256283_admin';
+$password = 'Parko3005';
 
-$host="localhost";
-$user="id19712343_admin";
-$pass="Huevos.1";
-
-$db="id19712343_parko";
-
-$conexion=mysqli_connect($host, $user, $pass, $db);
-
-if(!$conexion){
-	echo"Conexion Fallida";
+$conexion = new mysqli($hostname, $username, $password, $database);
+if ($conexion->connect_errno) {
+	echo "Lo sentimos, el sitio web está experimentando problemas";
+} else {
+	//echo "Conexion exitosa";
 }
-
 ?>
